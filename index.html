@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>БЦ Калужск</title>
+  <style>
+    :root {
+      --bg: #0b0c10;
+      --panel: rgba(23, 26, 31, 0.94);
+      --panel-soft: rgba(39, 45, 56, 0.9);
+      --line: rgba(255, 255, 255, 0.1);
+      --line-strong: rgba(255, 255, 255, 0.16);
+      --text: #efece7;
+      --muted: #aca8a0;
+      --blue: #2f4f7d;
+      --blue-soft: #6fa4ef;
+      --red: #d23d4f;
+      --shadow: 0 28px 60px rgba(0, 0, 0, 0.42);
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(79, 111, 163, 0.18), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(210, 61, 79, 0.08), transparent 22%),
+        linear-gradient(135deg, #06070a 0%, #0f1116 38%, #13161c 100%);
+    }
+
+    .page {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(420px, 48%) minmax(520px, 52%);
+      gap: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(8, 9, 12, 0.94) 0%, rgba(10, 11, 15, 0.84) 43%, rgba(10, 11, 15, 0.22) 56%, rgba(10, 11, 15, 0) 66%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .left,
+    .right {
+      position: relative;
+      z-index: 2;
+    }
+
+    .left {
+      padding: 38px 30px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      background: linear-gradient(180deg, rgba(24, 25, 29, 0.96), rgba(18, 20, 24, 0.92));
+      border-right: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .eyebrow {
+      margin: 0;
+      font-size: 0.96rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: #ff5867;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.045em;
+      font-weight: 800;
+    }
+
+    h1 span {
+      color: var(--blue-soft);
+      font-weight: 700;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1.45fr 1.1fr 0.95fr;
+      gap: 12px;
+    }
+
+    .stat {
+      padding: 18px 18px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--line);
+      background: rgba(19, 21, 24, 0.82);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    }
+
+    .stat.primary {
+      background: linear-gradient(180deg, #2a4670 0%, #29456e 100%);
+      border-color: rgba(94, 146, 225, 0.45);
+    }
+
+    .stat-label {
+      display: block;
+      font-size: 0.94rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .stat.primary .stat-label {
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .stat-value {
+      display: block;
+      font-size: clamp(2rem, 2.6vw, 3rem);
+      line-height: 0.92;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      margin-bottom: 6px;
+    }
+
+    .stat-unit {
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .stat.primary .stat-unit {
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .section-title {
+      margin: 0 0 8px;
+      font-size: clamp(1.9rem, 2.4vw, 3rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      font-weight: 800;
+    }
+
+    .panel {
+      border-radius: var(--radius-lg);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(18px);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      background: #31425d;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 0.82rem;
+      text-align: left;
+      padding: 13px 18px;
+      font-weight: 700;
+    }
+
+    tbody td {
+      padding: 13px 18px;
+      border-top: 1px solid var(--line);
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: #dfdbd5;
+    }
+
+    tbody tr {
+      background: rgba(26, 28, 32, 0.72);
+    }
+
+    tbody tr:hover {
+      background: rgba(33, 36, 42, 0.9);
+    }
+
+    td.num,
+    th.num {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    td.code {
+      width: 12%;
+      white-space: nowrap;
+      color: #f0ede7;
+      font-weight: 700;
+    }
+
+    .chapter-table tbody tr.active {
+      position: relative;
+      background: rgba(33, 36, 42, 0.95);
+    }
+
+    .chapter-table tbody tr {
+      cursor: pointer;
+    }
+
+    .chapter-table tbody tr:focus-visible {
+      outline: 2px solid var(--blue-soft);
+      outline-offset: -2px;
+    }
+
+    .chapter-table tbody tr.active td:first-child {
+      box-shadow: inset 4px 0 0 var(--red);
+    }
+
+    .metrics-header {
+      padding: 14px 18px;
+      background: #4b586b;
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .metrics thead th {
+      background: #647084;
+    }
+
+    .metrics tbody td:first-child {
+      width: 58%;
+      font-weight: 700;
+    }
+
+    .right {
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(215, 225, 238, 0.08), rgba(14, 16, 19, 0.12)),
+        url("./assets/bc-kaluzhsk-render.png") center center / cover no-repeat;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding: 30px 36px 62px;
+    }
+
+    .right::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(10, 12, 15, 0.1) 0%, rgba(10, 12, 15, 0.18) 52%, rgba(10, 12, 15, 0.58) 100%),
+        linear-gradient(90deg, rgba(8, 9, 12, 0.12) 0%, rgba(8, 9, 12, 0) 28%, rgba(8, 9, 12, 0.02) 100%);
+    }
+
+    .share-card {
+      position: relative;
+      z-index: 2;
+      width: min(320px, 100%);
+      padding: 18px 18px 16px;
+      border-radius: 18px;
+      background: rgba(18, 20, 25, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.34);
+      backdrop-filter: blur(14px);
+    }
+
+    .share-kicker {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      color: rgba(255, 255, 255, 0.66);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .share-value {
+      font-size: 4rem;
+      line-height: 0.95;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      margin: 0 0 6px;
+    }
+
+    .share-caption {
+      margin: 0;
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .progress {
+      position: absolute;
+      left: 56px;
+      right: 56px;
+      bottom: 22px;
+      height: 8px;
+      border-radius: 999px;
+      overflow: hidden;
+      z-index: 3;
+      background: rgba(255, 255, 255, 0.08);
+      display: grid;
+      grid-template-columns: 76fr 8fr 6fr 5fr 5fr;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    }
+
+    .progress span:nth-child(1) { background: #d72639; }
+    .progress span:nth-child(2) { background: #2aa198; }
+    .progress span:nth-child(3) { background: #b98f25; }
+    .progress span:nth-child(4) { background: #426cc2; }
+    .progress span:nth-child(5) { background: #39455d; }
+
+    @media (max-width: 1180px) {
+      .page {
+        grid-template-columns: 1fr;
+      }
+
+      .left {
+        padding-bottom: 110px;
+      }
+
+      .right {
+        min-height: 56vh;
+        justify-content: flex-start;
+        padding: 22px 22px 70px;
+      }
+
+      .page::before {
+        background:
+          linear-gradient(180deg, rgba(8, 9, 12, 0.9) 0%, rgba(8, 9, 12, 0.78) 38%, rgba(8, 9, 12, 0.2) 62%, rgba(8, 9, 12, 0.06) 100%);
+      }
+    }
+
+    @media (max-width: 820px) {
+      .left {
+        padding: 22px 16px 90px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 2.8rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      thead th,
+      tbody td {
+        padding: 12px 10px;
+        font-size: 0.88rem;
+      }
+
+      .progress {
+        left: 16px;
+        right: 16px;
+      }
+
+      .share-value {
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="left">
+      <p class="eyebrow">БЦ Калужск</p>
+      <h1>БЦ Калужск <span>(Калужское шоссе)</span></h1>
+
+      <div class="stats">
+        <article class="stat primary">
+          <span class="stat-label">Расчет СФР 2025</span>
+          <span class="stat-value">4 669 832 361</span>
+          <span class="stat-unit">руб.</span>
+        </article>
+        <article class="stat">
+          <span class="stat-label">Удельный показатель</span>
+          <span class="stat-value">161 586</span>
+          <span class="stat-unit">руб/м2</span>
+        </article>
+        <article class="stat">
+          <span class="stat-label">ТЭП 2025</span>
+          <span class="stat-value">28 900</span>
+          <span class="stat-unit">м2 общ.</span>
+        </article>
+      </div>
+
+      <section>
+        <h2 class="section-title">Расчет стоимости объекта на декабрь 2025 года</h2>
+        <div class="panel">
+          <table class="chapter-table">
+            <thead>
+              <tr>
+                <th>Код</th>
+                <th>Наименование</th>
+                <th class="num">руб/м2</th>
+                <th class="num">СФР 2025</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="code">Р2.2.1.</td>
+                <td>ГЛАВА 1. ПОДГОТОВКА ТЕРРИТОРИИ СТРОИТЕЛЬСТВА</td>
+                <td class="num">100</td>
+                <td class="num">2 890 000</td>
+              </tr>
+              <tr>
+                <td class="code">Р2.2.2.</td>
+                <td>ГЛАВА 2. ОСНОВНЫЕ ОБЪЕКТЫ СТРОИТЕЛЬСТВА</td>
+                <td class="num">127 267</td>
+                <td class="num">3 678 011 143</td>
+              </tr>
+              <tr>
+                <td class="code">Р2.2.4.</td>
+                <td>ГЛАВА 4. ОБЪЕКТЫ ЭНЕРГЕТИЧЕСКОГО ХОЗЯЙСТВА</td>
+                <td class="num">9 811</td>
+                <td class="num">283 526 550</td>
+              </tr>
+              <tr>
+                <td class="code">Р2.2.5.</td>
+                <td>ГЛАВА 5. ОБЪЕКТЫ ТРАНСПОРТНОГО ХОЗЯЙСТВА И СВЯЗИ</td>
+                <td class="num">306</td>
+                <td class="num">8 834 811</td>
+              </tr>
+              <tr>
+                <td class="code">Р2.2.6.</td>
+                <td>ГЛАВА 6. НАРУЖНЫЕ СЕТИ И СООРУЖЕНИЯ</td>
+                <td class="num">6 688</td>
+                <td class="num">193 272 974</td>
+              </tr>
+              <tr>
+                <td class="code">Р2.2.7.</td>
+                <td>ГЛАВА 7. БЛАГОУСТРОЙСТВО, ДОРОГИ И ОЗЕЛЕНЕНИЕ ТЕРРИТОРИИ</td>
+                <td class="num">1 108</td>
+                <td class="num">32 028 478</td>
+              </tr>
+              <tr class="active">
+                <td class="code">Р2.2.8.</td>
+                <td>ГЛАВА 8. ВРЕМЕННЫЕ ЗДАНИЯ И СООРУЖЕНИЯ</td>
+                <td class="num">5 258</td>
+                <td class="num">151 954 438</td>
+              </tr>
+              <tr>
+                <td class="code">Р2.2.9.</td>
+                <td>ГЛАВА 9. ПРОЧИЕ РАБОТЫ И ЗАТРАТЫ</td>
+                <td class="num">2 347</td>
+                <td class="num">67 830 400</td>
+              </tr>
+              <tr>
+                <td class="code">Р2.2.12.</td>
+                <td>ГЛАВА 12. ПРОЕКТНЫЕ И ИЗЫСКАТЕЛЬСКИЕ РАБОТЫ, АВТОРСКИЙ НАДЗОР</td>
+                <td class="num">8 702</td>
+                <td class="num">251 483 568</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="metrics-header">Технико-экономические показатели</div>
+        <table class="metrics">
+          <thead>
+            <tr>
+              <th>Показатель</th>
+              <th class="num">Ед. изм.</th>
+              <th class="num">Значение</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Площадь территории</td>
+              <td class="num">га</td>
+              <td class="num">0,4859</td>
+            </tr>
+            <tr>
+              <td>Общая площадь объекта</td>
+              <td class="num">м2</td>
+              <td class="num">56 019,0</td>
+            </tr>
+            <tr>
+              <td>Наземная часть</td>
+              <td class="num">м2</td>
+              <td class="num">46 464,0</td>
+            </tr>
+            <tr>
+              <td>Подземная часть</td>
+              <td class="num">м2</td>
+              <td class="num">9 555,0</td>
+            </tr>
+            <tr>
+              <td>Коммерческая площадь</td>
+              <td class="num">м2</td>
+              <td class="num">28 900,0</td>
+            </tr>
+            <tr>
+              <td>Этажность</td>
+              <td class="num">э</td>
+              <td class="num">17</td>
+            </tr>
+            <tr>
+              <td>Кол-во подземных этажей</td>
+              <td class="num">э</td>
+              <td class="num">2</td>
+            </tr>
+            <tr>
+              <td>Длительность строительства, мес. (план)</td>
+              <td class="num">мес.</td>
+              <td class="num">-</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </section>
+
+    <section class="right">
+      <div class="share-card" aria-live="polite">
+        <div class="share-kicker">Доля выбранной главы</div>
+        <p class="share-value">3.25%</p>
+        <p class="share-caption">Глава 8. Временные здания и сооружения</p>
+      </div>
+    </section>
+
+    <div class="progress" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </main>
+  <script>
+    const totalSfr = 4669832361;
+    const chapterRows = document.querySelectorAll(".chapter-table tbody tr");
+    const shareValue = document.querySelector(".share-value");
+    const shareCaption = document.querySelector(".share-caption");
+
+    const parseMoney = (value) => Number(value.replace(/\s/g, "")) || 0;
+    const toCaption = (value) => {
+      const normalized = value.toLocaleLowerCase("ru-RU").replace(/^глава/, "Глава");
+      return normalized.charAt(0).toLocaleUpperCase("ru-RU") + normalized.slice(1);
+    };
+
+    const selectChapter = (row) => {
+      chapterRows.forEach((item) => item.classList.remove("active"));
+      row.classList.add("active");
+
+      const name = row.cells[1].textContent.trim();
+      const sfr = parseMoney(row.cells[3].textContent);
+      const percent = totalSfr ? (sfr / totalSfr) * 100 : 0;
+
+      shareValue.textContent = `${percent.toFixed(2)}%`;
+      shareCaption.textContent = toCaption(name);
+    };
+
+    chapterRows.forEach((row) => {
+      row.tabIndex = 0;
+      row.addEventListener("click", () => selectChapter(row));
+      row.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          selectChapter(row);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
