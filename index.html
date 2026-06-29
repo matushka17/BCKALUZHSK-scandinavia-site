@@ -82,15 +82,19 @@
 
     h1 {
       margin: 0;
-      font-size: clamp(3rem, 5vw, 4.5rem);
-      line-height: 0.95;
+      font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+      line-height: 0.92;
       letter-spacing: -0.045em;
       font-weight: 800;
     }
 
     h1 span {
+      display: block;
       color: var(--blue-soft);
       font-weight: 700;
+      font-size: 0.64em;
+      line-height: 0.95;
+      margin-top: 0.12em;
     }
 
     .stats {
@@ -240,13 +244,10 @@
 
     .right {
       min-height: 100vh;
-      background:
-        linear-gradient(180deg, rgba(215, 225, 238, 0.08), rgba(14, 16, 19, 0.12)),
-        url("./assets/bc-kaluzhsk-render.png") center center / cover no-repeat;
       display: flex;
-      align-items: flex-end;
-      justify-content: flex-end;
-      padding: 30px 36px 62px;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 0 30px 46px 18px;
     }
 
     .right::before {
@@ -258,12 +259,33 @@
         linear-gradient(90deg, rgba(8, 9, 12, 0.12) 0%, rgba(8, 9, 12, 0) 28%, rgba(8, 9, 12, 0.02) 100%);
     }
 
-    .share-card {
+    .visual-panel {
       position: relative;
       z-index: 2;
-      width: min(320px, 100%);
-      padding: 18px 18px 16px;
-      border-radius: 18px;
+      width: min(100%, 980px);
+      margin-top: var(--visual-offset, 0px);
+      background: transparent;
+    }
+
+    .render-frame {
+      display: block;
+      width: 100%;
+      min-height: 620px;
+      height: var(--visual-height, 620px);
+      max-height: 760px;
+      border-radius: 0;
+      background-color: transparent;
+      background: url("./assets/bc-kaluzhsk-render.png") center top / 100% 100% no-repeat;
+    }
+
+    .share-card {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 2;
+      width: min(430px, calc(100% - 36px));
+      padding: 16px 18px 16px;
+      border-radius: 0;
       background: rgba(18, 20, 25, 0.88);
       border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: 0 20px 45px rgba(0, 0, 0, 0.34);
@@ -271,25 +293,26 @@
     }
 
     .share-kicker {
-      font-size: 0.85rem;
+      font-size: 0.76rem;
       text-transform: uppercase;
       letter-spacing: 0.02em;
       color: rgba(255, 255, 255, 0.66);
       font-weight: 700;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .share-value {
-      font-size: 4rem;
-      line-height: 0.95;
+      font-size: clamp(3.2rem, 5vw, 4.8rem);
+      line-height: 0.9;
       font-weight: 800;
       letter-spacing: -0.05em;
-      margin: 0 0 6px;
+      margin: 0 0 8px;
     }
 
     .share-caption {
       margin: 0;
-      font-size: 0.98rem;
+      font-size: 0.88rem;
+      line-height: 1.25;
       font-weight: 600;
       color: rgba(255, 255, 255, 0.8);
     }
@@ -327,7 +350,22 @@
       .right {
         min-height: 56vh;
         justify-content: flex-start;
-        padding: 22px 22px 70px;
+        padding: 24px 22px 70px;
+      }
+
+      .visual-panel {
+        width: 100%;
+      }
+
+      .render-frame {
+        min-height: 420px;
+        height: 56vh;
+        max-height: none;
+      }
+
+      .share-card {
+        top: 16px;
+        right: 16px;
       }
 
       .page::before {
@@ -367,14 +405,23 @@
       .share-value {
         font-size: 3rem;
       }
+
+      .share-card {
+        position: static;
+        width: 100%;
+        margin-top: 14px;
+      }
+
+      .visual-panel {
+        margin-top: 0;
+      }
     }
   </style>
 </head>
 <body>
   <main class="page">
     <section class="left">
-      <p class="eyebrow">БЦ Калужск</p>
-      <h1>БЦ Калужск <span>(Калужское шоссе)</span></h1>
+      <h1>Бизнес Центр <span>Калужское шоссе</span></h1>
 
       <div class="stats">
         <article class="stat primary">
@@ -394,9 +441,9 @@
         </article>
       </div>
 
-      <section>
+      <section class="calc-section">
         <h2 class="section-title">Расчет стоимости объекта на декабрь 2025 года</h2>
-        <div class="panel">
+        <div class="panel calc-panel">
           <table class="chapter-table">
             <thead>
               <tr>
@@ -504,18 +551,13 @@
             </tr>
             <tr>
               <td>Этажность</td>
-              <td class="num">э</td>
+              <td class="num">эт</td>
               <td class="num">17</td>
             </tr>
             <tr>
               <td>Кол-во подземных этажей</td>
-              <td class="num">э</td>
+              <td class="num">эт</td>
               <td class="num">2</td>
-            </tr>
-            <tr>
-              <td>Длительность строительства, мес. (план)</td>
-              <td class="num">мес.</td>
-              <td class="num">-</td>
             </tr>
           </tbody>
         </table>
@@ -523,10 +565,13 @@
     </section>
 
     <section class="right">
-      <div class="share-card" aria-live="polite">
-        <div class="share-kicker">Доля выбранной главы</div>
-        <p class="share-value">3.25%</p>
-        <p class="share-caption">Глава 8. Временные здания и сооружения</p>
+      <div class="visual-panel">
+        <div class="render-frame" aria-hidden="true"></div>
+        <div class="share-card" aria-live="polite">
+          <div class="share-kicker">Доля выбранной главы</div>
+          <p class="share-value">3.25%</p>
+          <p class="share-caption">Глава 8. Временные здания и сооружения</p>
+        </div>
       </div>
     </section>
 
@@ -543,6 +588,10 @@
     const chapterRows = document.querySelectorAll(".chapter-table tbody tr");
     const shareValue = document.querySelector(".share-value");
     const shareCaption = document.querySelector(".share-caption");
+    const page = document.querySelector(".page");
+    const calcSection = document.querySelector(".calc-section");
+    const calcPanel = document.querySelector(".calc-panel");
+    const visualPanel = document.querySelector(".visual-panel");
 
     const parseMoney = (value) => Number(value.replace(/\s/g, "")) || 0;
     const toCaption = (value) => {
@@ -572,6 +621,33 @@
         }
       });
     });
+
+    const syncVisualPanel = () => {
+      if (!page || !calcSection || !calcPanel || !visualPanel || window.innerWidth <= 1180) {
+        document.documentElement.style.setProperty("--visual-offset", "0px");
+        document.documentElement.style.setProperty("--visual-height", "620px");
+        return;
+      }
+
+      const pageRect = page.getBoundingClientRect();
+      const calcRect = calcPanel.getBoundingClientRect();
+      const offset = Math.max(0, calcRect.top - pageRect.top);
+      const height = Math.max(620, Math.round(calcRect.height));
+
+      document.documentElement.style.setProperty("--visual-offset", `${offset}px`);
+      document.documentElement.style.setProperty("--visual-height", `${height}px`);
+    };
+
+    syncVisualPanel();
+    window.addEventListener("resize", syncVisualPanel);
+
+    if ("ResizeObserver" in window) {
+      const observer = new ResizeObserver(syncVisualPanel);
+      observer.observe(calcSection);
+      observer.observe(calcPanel);
+      observer.observe(page);
+      observer.observe(visualPanel);
+    }
   </script>
 </body>
 </html>
