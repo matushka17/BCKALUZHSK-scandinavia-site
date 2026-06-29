@@ -6,20 +6,23 @@
   <title>БЦ Калужск</title>
   <style>
     :root {
-      --bg: #ffffff;
+      --bg: #fbfcfe;
       --panel: #ffffff;
       --panel-soft: #ffffff;
-      --line: rgba(15, 23, 42, 0.1);
-      --line-strong: rgba(15, 23, 42, 0.16);
-      --text: #111827;
-      --muted: #6b7280;
+      --line: #d8e0eb;
+      --line-strong: #c2cedf;
+      --text: #1f2b44;
+      --muted: #667085;
       --blue: #2f4f7d;
-      --blue-soft: #3b82f6;
-      --red: #d23d4f;
-      --shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
-      --radius-xl: 28px;
-      --radius-lg: 18px;
-      --radius-md: 14px;
+      --blue-soft: #31599a;
+      --red: #ef3340;
+      --shadow: 0 18px 36px rgba(43, 62, 93, 0.08);
+      --radius-xl: 24px;
+      --radius-lg: 14px;
+      --radius-md: 12px;
+      --header-bg: #3d506c;
+      --header-soft: #6e8097;
+      --row-active: #e9f0fb;
     }
 
     * {
@@ -29,9 +32,9 @@
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-family: "Inter", "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif;
       color: var(--text);
-      background: #ffffff;
+      background: var(--bg);
     }
 
     .page {
@@ -59,57 +62,59 @@
     }
 
     .left {
-      padding: 38px 30px 28px;
+      padding: 28px 30px 28px;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 14px;
       background: #ffffff;
-      border-right: 1px solid rgba(15, 23, 42, 0.08);
+      border-right: 1px solid #e5ebf3;
     }
 
     .eyebrow {
       margin: 0;
-      font-size: 0.96rem;
-      font-weight: 700;
-      letter-spacing: 0.03em;
+      font-size: 0.88rem;
+      font-weight: 800;
+      letter-spacing: 0.01em;
       text-transform: uppercase;
-      color: #d23d4f;
+      color: var(--red);
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(2.4rem, 4.2vw, 3.8rem);
-      line-height: 0.92;
-      letter-spacing: -0.045em;
-      font-weight: 800;
+      font-size: clamp(2.7rem, 4.3vw, 4.2rem);
+      line-height: 0.94;
+      letter-spacing: -0.055em;
+      font-weight: 900;
     }
 
     h1 span {
-      display: block;
+      display: inline;
       color: var(--blue-soft);
-      font-weight: 700;
-      font-size: 0.64em;
-      line-height: 0.95;
-      margin-top: 0.12em;
+      font-weight: 800;
+      font-size: 0.88em;
+      line-height: inherit;
+      margin-top: 0;
     }
 
     .stats {
       display: grid;
       grid-template-columns: 1.45fr 1.1fr 0.95fr;
-      gap: 12px;
+      gap: 10px;
+      margin-bottom: 2px;
     }
 
     .stat {
-      padding: 18px 18px 16px;
+      padding: 18px 18px 14px;
       border-radius: var(--radius-md);
       border: 1px solid var(--line);
       background: #ffffff;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      box-shadow: 0 1px 2px rgba(31, 43, 68, 0.04);
     }
 
     .stat.primary {
-      background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%);
-      border-color: rgba(59, 130, 246, 0.28);
+      background: #2f4f87;
+      border-color: #2f4f87;
+      color: #ffffff;
     }
 
     .stat-label {
@@ -121,34 +126,35 @@
     }
 
     .stat.primary .stat-label {
-      color: #315178;
+      color: rgba(255, 255, 255, 0.78);
     }
 
     .stat-value {
       display: block;
-      font-size: clamp(2rem, 2.6vw, 3rem);
+      font-size: clamp(2.15rem, 2.8vw, 3.1rem);
       line-height: 0.92;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: -0.05em;
       margin-bottom: 6px;
     }
 
     .stat-unit {
-      font-size: 0.88rem;
+      font-size: 0.82rem;
       color: var(--muted);
-      font-weight: 600;
+      font-weight: 700;
+      text-transform: none;
     }
 
     .stat.primary .stat-unit {
-      color: #315178;
+      color: rgba(255, 255, 255, 0.82);
     }
 
     .section-title {
-      margin: 0 0 8px;
-      font-size: clamp(1.9rem, 2.4vw, 3rem);
-      line-height: 1.05;
-      letter-spacing: -0.04em;
-      font-weight: 800;
+      margin: 6px 0 6px;
+      font-size: clamp(2rem, 2.5vw, 3.05rem);
+      line-height: 1.02;
+      letter-spacing: -0.05em;
+      font-weight: 900;
     }
 
     .panel {
@@ -157,7 +163,6 @@
       border: 1px solid var(--line);
       box-shadow: var(--shadow);
       overflow: hidden;
-      backdrop-filter: blur(18px);
     }
 
     table {
@@ -166,20 +171,20 @@
     }
 
     thead th {
-      background: #f3f4f6;
-      color: #374151;
-      font-size: 0.82rem;
+      background: var(--header-bg);
+      color: rgba(255, 255, 255, 0.92);
+      font-size: 0.84rem;
       text-align: left;
-      padding: 13px 18px;
-      font-weight: 700;
+      padding: 12px 18px;
+      font-weight: 800;
     }
 
     tbody td {
-      padding: 13px 18px;
+      padding: 11px 18px;
       border-top: 1px solid var(--line);
-      font-size: 0.98rem;
-      font-weight: 600;
-      color: #1f2937;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #263248;
     }
 
     tbody tr {
@@ -187,7 +192,7 @@
     }
 
     tbody tr:hover {
-      background: #f9fafb;
+      background: #f8fbff;
     }
 
     td.num,
@@ -199,13 +204,13 @@
     td.code {
       width: 12%;
       white-space: nowrap;
-      color: #111827;
-      font-weight: 700;
+      color: #2a3953;
+      font-weight: 800;
     }
 
     .chapter-table tbody tr.active {
       position: relative;
-      background: #f3f4f6;
+      background: var(--row-active);
     }
 
     .chapter-table tbody tr {
@@ -223,14 +228,14 @@
 
     .metrics-header {
       padding: 14px 18px;
-      background: #e5e7eb;
-      color: #1f2937;
-      font-size: 1rem;
-      font-weight: 700;
+      background: var(--header-soft);
+      color: rgba(255, 255, 255, 0.94);
+      font-size: 0.98rem;
+      font-weight: 800;
     }
 
     .metrics thead th {
-      background: #f3f4f6;
+      background: var(--header-soft);
     }
 
     .metrics tbody td:first-child {
@@ -243,7 +248,7 @@
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      padding: 0 30px 46px 18px;
+      padding: 0 0 0 0;
     }
 
     .right::before {
@@ -256,7 +261,7 @@
     .visual-panel {
       position: relative;
       z-index: 2;
-      width: min(100%, 980px);
+      width: 100%;
       margin-top: var(--visual-offset, 0px);
       background: transparent;
     }
@@ -266,7 +271,7 @@
       width: 100%;
       min-height: 620px;
       height: var(--visual-height, 620px);
-      max-height: 760px;
+      max-height: none;
       border-radius: 0;
       background-color: transparent;
       background: url("./assets/bc-kaluzhsk-render.png") center top / 100% 100% no-repeat;
@@ -274,63 +279,64 @@
 
     .share-card {
       position: absolute;
-      top: 0;
-      right: 0;
+      right: 36px;
+      bottom: 86px;
       z-index: 2;
-      width: min(430px, calc(100% - 36px));
-      padding: 16px 18px 16px;
-      border-radius: 0;
-      background: rgba(255, 255, 255, 0.96);
-      border: 1px solid rgba(15, 23, 42, 0.1);
-      box-shadow: 0 18px 36px rgba(15, 23, 42, 0.1);
-      backdrop-filter: blur(10px);
+      width: min(320px, calc(100% - 72px));
+      padding: 16px 18px 18px;
+      border-radius: 14px;
+      background: rgba(30, 36, 49, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 18px 40px rgba(10, 16, 28, 0.24);
+      backdrop-filter: blur(12px);
     }
 
     .share-kicker {
-      font-size: 0.76rem;
+      font-size: 0.84rem;
       text-transform: uppercase;
       letter-spacing: 0.02em;
-      color: #6b7280;
-      font-weight: 700;
+      color: rgba(255, 255, 255, 0.74);
+      font-weight: 800;
       margin-bottom: 8px;
     }
 
     .share-value {
-      font-size: clamp(3.2rem, 5vw, 4.8rem);
+      font-size: clamp(3rem, 4.4vw, 4.2rem);
       line-height: 0.9;
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: -0.05em;
       margin: 0 0 8px;
+      color: #ffffff;
     }
 
     .share-caption {
       margin: 0;
-      font-size: 0.88rem;
+      font-size: 0.92rem;
       line-height: 1.25;
-      font-weight: 600;
-      color: #4b5563;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.86);
     }
 
     .progress {
       position: absolute;
       left: 56px;
       right: 56px;
-      bottom: 22px;
-      height: 8px;
+      bottom: 18px;
+      height: 10px;
       border-radius: 999px;
       overflow: hidden;
       z-index: 3;
-      background: #f3f4f6;
+      background: rgba(255, 255, 255, 0.28);
       display: grid;
       grid-template-columns: 76fr 8fr 6fr 5fr 5fr;
-      box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.06);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
     }
 
-    .progress span:nth-child(1) { background: #d72639; }
-    .progress span:nth-child(2) { background: #2aa198; }
-    .progress span:nth-child(3) { background: #b98f25; }
-    .progress span:nth-child(4) { background: #426cc2; }
-    .progress span:nth-child(5) { background: #39455d; }
+    .progress span:nth-child(1) { background: #ef3340; }
+    .progress span:nth-child(2) { background: #3e9d89; }
+    .progress span:nth-child(3) { background: #d8ab3d; }
+    .progress span:nth-child(4) { background: #4c73c4; }
+    .progress span:nth-child(5) { background: rgba(255, 255, 255, 0.65); }
 
     @media (max-width: 1180px) {
       .page {
@@ -358,8 +364,8 @@
       }
 
       .share-card {
-        top: 16px;
         right: 16px;
+        bottom: 74px;
       }
 
       .page::before {
@@ -377,7 +383,7 @@
       }
 
       h1 {
-        font-size: 2.8rem;
+        font-size: 2.9rem;
       }
 
       .section-title {
@@ -414,7 +420,8 @@
 <body>
   <main class="page">
     <section class="left">
-      <h1>Бизнес Центр <span>Калужское шоссе</span></h1>
+      <p class="eyebrow">Скандинавия, ППТ2-5</p>
+      <h1>Общественное здание <span>(уч 21)</span></h1>
 
       <div class="stats">
         <article class="stat primary">
